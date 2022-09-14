@@ -3,7 +3,7 @@ import { ICar, zCarSchema } from '../interfaces/ICar';
 import { IModel } from '../interfaces/IModel';
 import { IService } from '../interfaces/IService';
 
-const notFound = 'Car not found';
+const notFound = 'Object not found';
 
 class CarService implements IService<ICar> {
   protected _car: IModel<ICar>;

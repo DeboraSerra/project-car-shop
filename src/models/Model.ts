@@ -2,7 +2,7 @@ import { Model as MongoModel, isValidObjectId, UpdateQuery } from 'mongoose';
 import CodeError from '../errors/CodeError';
 import { IModel } from '../interfaces/IModel';
 
-const invalidId = 'Invalid MongoId';
+const invalidId = 'Id must have 24 hexadecimal characters';
 export default class Model<T> implements IModel<T> {
   protected _model: MongoModel<T>;
   constructor(model: MongoModel<T>) {
