@@ -5,6 +5,8 @@ import { ICar } from '../../../interfaces/ICar';
 import CarModel from '../../../models/Cars';
 import { carMock, carMockUpdate, carMockWithId, carsMock } from '../../mocks/Cars';
 
+const invalidId = 'Id must have 24 hexadecimal characters';
+
 describe('Model layer from cars', () => {
   const model = new CarModel();
   describe('read method', () => {
@@ -32,7 +34,7 @@ describe('Model layer from cars', () => {
       try {
         await model.readOne('ksdjfsçaldd');
       } catch (e: any) {
-        expect(e).to.have.property('message', 'Invalid MongoId');
+        expect(e).to.have.property('message', invalidId);
         expect(e).to.have.property('code', 400);
       }
     });
@@ -60,7 +62,7 @@ describe('Model layer from cars', () => {
       try {
         await model.update('ksdjfsçaldd', carMockUpdate);
       } catch (e: any) {
-        expect(e).to.have.property('message', 'Invalid MongoId');
+        expect(e).to.have.property('message', invalidId);
         expect(e).to.have.property('code', 400);
       }
     });
@@ -79,7 +81,7 @@ describe('Model layer from cars', () => {
       try {
         await model.delete('jfsdhfkjsh');
       } catch (e: any) {
-        expect(e).to.have.property('message', 'Invalid MongoId');
+        expect(e).to.have.property('message', invalidId);
         expect(e).to.have.property('code', 400);
       }
     });

@@ -33,7 +33,7 @@ class CarController {
   public async delete(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
     const car = await this._car.delete(id);
-    res.status(203).json(car);
+    res.status(204).json(car);
   }
 }
 

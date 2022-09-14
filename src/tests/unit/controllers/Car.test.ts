@@ -78,9 +78,9 @@ describe('Car controller layer', () => {
       res.json = sinon.stub().returns(res);
     });
     afterEach(sinon.restore);
-    it('returns status 203 and the deleted object', async () => {
+    it('returns status 204 and the deleted object', async () => {
       await controller.delete(req, res);
-      expect((res.status as sinon.SinonStub).calledWith(203)).to.be.true;
+      expect((res.status as sinon.SinonStub).calledWith(204)).to.be.true;
       expect((res.json as sinon.SinonStub).calledWith(carMockWithId)).to.be.true;
     });
   });

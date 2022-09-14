@@ -11,9 +11,9 @@ const errorHandler = async (
   const { code, message } = err;
   console.log(err);
   if (err instanceof ZodError) {
-    return res.status(400).json({ message: err.issues[0].message });
+    return res.status(400).json({ error: err.issues[0].message });
   }
-  res.status(code || 500).json({ message });
+  res.status(code || 500).json({ error: message });
 };
 
 export default errorHandler;

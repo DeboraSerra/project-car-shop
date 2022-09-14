@@ -6,6 +6,8 @@ import CarModel from '../../../models/Cars';
 import CarService from '../../../services/Car';
 import { carMock, carMockUpdate, carMockWithId, carsMock } from '../../mocks/Cars';
 
+const notFound = 'Object not found';
+
 describe('Car service layer', () => {
   const model = new CarModel();
   const service = new CarService(model);
@@ -36,7 +38,7 @@ describe('Car service layer', () => {
       try {
         await service.getOne(_id);
       } catch (e: any) {
-        expect(e).to.have.property('message', 'Car not found');
+        expect(e).to.have.property('message', notFound);
         expect(e).to.have.property('code', 404);
       };
     });
@@ -81,7 +83,7 @@ describe('Car service layer', () => {
       try {
         await service.update(_id, carMockUpdate);
       } catch (e: any) {
-        expect(e).to.have.property('message', 'Car not found');
+        expect(e).to.have.property('message', notFound);
         expect(e).to.have.property('code', 404);
       };
     });
@@ -89,6 +91,9 @@ describe('Car service layer', () => {
   describe('delete method', () => {
     const _id = '631ee56b94348cdea3cf5c85';
     beforeEach(() => {
+      sinon.stub(model, 'readOne')
+        .onCall(0).resolves(carMockWithId)
+        .withArgs(_id).resolves(null);
       sinon.stub(model, 'delete')
         .onCall(0).resolves(carMockWithId)
         .withArgs(_id).resolves(null);
@@ -102,7 +107,7 @@ describe('Car service layer', () => {
       try {
         await service.delete(_id);
       } catch (e: any) {
-        expect(e).to.have.property('message', 'Car not found');
+        expect(e).to.have.property('message', notFound);
         expect(e).to.have.property('code', 404);
       };
     });

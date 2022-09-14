@@ -38,8 +38,9 @@ class CarService implements IService<ICar> {
   }
 
   public async delete(id: string): Promise<ICar | null> {
+    const foundCar = await this._car.readOne(id);
+    if (!foundCar) throw new CodeError(notFound, 404);
     const car = await this._car.delete(id);
-    if (!car) throw new CodeError(notFound, 404);
     return car;
   }
 }
