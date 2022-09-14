@@ -2,6 +2,7 @@ import { Model as MongoModel, isValidObjectId, UpdateQuery } from 'mongoose';
 import CodeError from '../errors/CodeError';
 import { IModel } from '../interfaces/IModel';
 
+const invalidId = 'Invalid MongoId';
 export default class Model<T> implements IModel<T> {
   protected _model: MongoModel<T>;
   constructor(model: MongoModel<T>) {
@@ -14,7 +15,7 @@ export default class Model<T> implements IModel<T> {
   }
 
   public async readOne(id: string): Promise<T | null> {
-    if (!isValidObjectId(id)) throw new CodeError('Invalid MongoId', 400);
+    if (!isValidObjectId(id)) throw new CodeError(invalidId, 400);
     return this._model.findOne({ _id: id });
   }
 
@@ -23,7 +24,7 @@ export default class Model<T> implements IModel<T> {
   }
 
   public async update(id: string, obj: Partial<T>): Promise<T | null> {
-    if (!isValidObjectId(id)) throw new CodeError('Invalid MongoId', 400);
+    if (!isValidObjectId(id)) throw new CodeError(invalidId, 400);
     const result = await this._model.findByIdAndUpdate(
       { _id: id },
       { ...obj } as UpdateQuery<T>,
@@ -33,7 +34,7 @@ export default class Model<T> implements IModel<T> {
   }
 
   public async delete(id: string): Promise<T | null> {
-    if (!isValidObjectId(id)) throw new CodeError('Invalid MongoId', 400);
+    if (!isValidObjectId(id)) throw new CodeError(invalidId, 400);
     const result = await this._model.deleteOne({ _id: id });
     return result as unknown as T;
   }

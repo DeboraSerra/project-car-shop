@@ -17,6 +17,6 @@ export const zVehicleSchema = z.object({
   }).min(3, { message: 'color must be 3 characters long' }),
   status: z.boolean().optional(),
   buyValue: z.number().int(),
-})
+});
 
 export type IVehicle = z.infer<typeof zVehicleSchema>;

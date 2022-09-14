@@ -3,6 +3,8 @@ import { ICar, zCarSchema } from '../interfaces/ICar';
 import { IModel } from '../interfaces/IModel';
 import { IService } from '../interfaces/IService';
 
+const notFound = 'Car not found';
+
 class CarService implements IService<ICar> {
   protected _car: IModel<ICar>;
   constructor(model: IModel<ICar>) {
@@ -16,7 +18,7 @@ class CarService implements IService<ICar> {
 
   public async getOne(id: string): Promise<ICar> {
     const car = await this._car.readOne(id);
-    if (!car) throw new CodeError('Car not found', 404);
+    if (!car) throw new CodeError(notFound, 404);
     return car as ICar;
   }
 
@@ -31,13 +33,13 @@ class CarService implements IService<ICar> {
     const parsed = zCarSchema.safeParse(obj);
     if (!parsed.success) throw parsed.error;
     const car = await this._car.update(id, obj);
-    if (!car) throw new CodeError('Car not found', 404);
+    if (!car) throw new CodeError(notFound, 404);
     return car as ICar;
   }
 
   public async delete(id: string): Promise<ICar | null> {
     const car = await this._car.delete(id);
-    if (!car) throw new CodeError('Car not found', 404);
+    if (!car) throw new CodeError(notFound, 404);
     return car;
   }
 }

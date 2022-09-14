@@ -4,5 +4,5 @@ export default class CodeError extends Error {
     super(message);
     this._code = code;
   }
-  get code() { return this._code };
+  get code() { return this._code; }
 }
