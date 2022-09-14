@@ -38,8 +38,9 @@ class MotorcycleService implements IService<IMotorcycle> {
   }
 
   public async delete(id: string): Promise<IMotorcycle | null> {
+    const found = await this._motorcycle.readOne(id);
+    if (!found) throw new CodeError(notFound, 404);
     const motorcycle = await this._motorcycle.delete(id);
-    if (!motorcycle) throw new CodeError(notFound, 404);
     return motorcycle;
   }
 }

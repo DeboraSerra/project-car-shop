@@ -36,7 +36,7 @@ class MotorcycleController {
   public async delete(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
     const motorcycle = await this._motorcycle.delete(id);
-    res.status(203).json(motorcycle);
+    res.status(204).json(motorcycle);
   }
 }
 
